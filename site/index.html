@@ -9,6 +9,7 @@
 <meta name="site-kind" content="other">
 <meta property="og:title" content="Comfy ErgoMax, cadeira ergonômica em tela mesh preta">
 <meta property="og:image" content="img/og.jpg">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="preload" as="image" href="img/tres-quartos.webp">
 <style>
 :root{
@@ -62,11 +63,12 @@ section{position:relative}
 .hero .actions{display:flex;gap:14px;flex-wrap:wrap}
 .hero .stage{position:relative;aspect-ratio:1/1;max-height:84svh;justify-self:center;width:100%}
 .hero .stage::before{content:"";position:absolute;inset:8% 6% 2%;border-radius:50%;background:radial-gradient(closest-side,#fff 0%,rgba(255,255,255,0) 72%)}
-.hero .stage img{position:relative;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transform:scale(1.32);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-.hero .stage:hover img{transform:scale(1.35)}
+.hero .stage img{position:relative;width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply;transform:scale(var(--s,1.32));transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.hero .stage:hover img{transform:scale(calc(var(--s,1.32) + .03))}
 .fact{display:flex;gap:36px;margin-top:44px;padding-top:24px;border-top:1px solid var(--line)}
 .fact b{display:block;font-size:clamp(28px,3vw,44px);letter-spacing:-.03em;line-height:1}
 .fact span{font-size:14px;color:var(--muted)}
+.fact b span{font-size:inherit;color:inherit}
 
 /* ergonomia (escura) */
 .dark{background:var(--dark);color:#fff}
@@ -147,12 +149,53 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 .wa-float svg{width:32px;height:32px;fill:#fff}
 .wa-float[hidden]{display:none}
 
+
+/* ---- acabamento premium ---- */
+.eyebrow::before{content:"";display:inline-block;width:32px;height:1px;background:currentColor;vertical-align:middle;margin-right:14px}
+.soft{color:#8a8f96;font-weight:600}
+h1{font-weight:800}
+.btn{box-shadow:0 1px 0 rgba(255,255,255,.18) inset}
+.btn.ghost::after,.cta .btn::after{content:"\2192";transition:transform .2s}
+.btn.ghost:hover::after,.cta .btn:hover::after{transform:translateX(4px)}
+.hero{background:radial-gradient(900px 600px at 78% 45%,#fff 0%,rgba(255,255,255,0) 70%),var(--bg)}
+.hero .stage::after{content:"";position:absolute;left:18%;right:18%;bottom:10%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.22),rgba(0,0,0,0));filter:blur(6px);animation:shadowin 1.6s .5s cubic-bezier(.2,.7,.2,1) backwards}
+.ergo{background:radial-gradient(900px 520px at 85% 40%,#0f3153 0%,var(--dark) 68%)}
+.cta{background:radial-gradient(800px 420px at 50% 0%,#1c2a38 0%,var(--ink) 70%)}
+.cta h2{font-size:clamp(40px,6vw,88px);max-width:12ch}
+.card,.adj .big,.ergo .photo{border-radius:28px}
+.card{box-shadow:0 1px 0 rgba(0,0,0,.04),0 24px 48px -36px rgba(0,0,0,.35)}
+.spec tr:hover th,.spec tr:hover td{color:var(--ink)}
+.mat dl div{transition:padding-left .25s}
+.mat dl div:hover{padding-left:12px}
+
+/* faixa que corre */
+.strip{background:var(--ink);color:#fff;overflow:hidden;white-space:nowrap;padding:26px 0;border-block:1px solid #23272c;display:flex}
+.strip .track{flex:none;display:flex;animation:slide 38s linear infinite;will-change:transform}
+.strip span{font-size:clamp(20px,2.4vw,34px);font-weight:700;letter-spacing:-.02em;display:inline-flex;align-items:center;gap:56px;padding-right:56px}
+.strip span::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.strip:hover .track{animation-play-state:paused}
+
+/* entrada e revelação */
+@keyframes rise{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+@keyframes chairin{from{opacity:0;transform:translateX(70px) scale(1.15)}to{opacity:1;transform:translateX(0) scale(var(--s,1.32))}}
+@keyframes shadowin{from{opacity:0;transform:scaleX(.4)}to{opacity:1;transform:none}}
+@keyframes slide{to{transform:translateX(-100%)}}
+.hero .wrap>div:first-child>*{animation:rise 1.1s cubic-bezier(.2,.7,.2,1) backwards}
+.hero .wrap>div:first-child>:nth-child(2){animation-delay:.12s}
+.hero .wrap>div:first-child>:nth-child(3){animation-delay:.24s}
+.hero .wrap>div:first-child>:nth-child(4){animation-delay:.36s}
+.hero .wrap>div:first-child>:nth-child(5){animation-delay:.48s}
+.hero .stage img{animation:chairin 1.5s .15s cubic-bezier(.2,.7,.2,1) backwards}
+.js .rv{opacity:0;transform:translateY(34px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js .rv.in{opacity:1;transform:none}
+
 /* tablet / celular */
 @media(max-width:900px){
   .nav nav{display:none}
   .screen{min-height:auto;padding:104px 0 64px}
   .hero .wrap,.ergo .wrap,.mat .wrap,.spec .wrap{grid-template-columns:1fr}
-  .hero .stage{order:-1;max-width:520px;margin-top:-24px}
+  .hero .stage{order:-1;max-width:520px;--s:1.05}
+  .hero .eyebrow{margin-top:12px}
   .hero .btn,.cta .btn{width:100%}
   .fact{gap:24px;flex-wrap:wrap}
   .adj .grid{grid-template-columns:1fr}
@@ -172,6 +215,8 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 /* movimento reduzido: tudo parado e visível */
 @media(prefers-reduced-motion:reduce){
+  .js .rv{opacity:1!important;transform:none!important}
+  .strip .track,.hero .wrap>div:first-child>*,.hero .stage img,.hero .stage::after{animation:none!important}
   html{scroll-behavior:auto}
   *{transition:none!important}
   .tour{height:auto}
@@ -205,20 +250,22 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div>
       <p class="eyebrow">Cadeira ergonômica de escritório</p>
-      <h1 id="h-hero">Comfy ErgoMax em tela mesh preta.</h1>
+      <h1 id="h-hero">Comfy ErgoMax <span class="soft">em tela mesh preta.</span></h1>
       <p>Estrutura em alumínio, encosto de cabeça, apoio lombar e braços 3D. Feita para quem passa o dia sentado.</p>
       <div class="actions">
         <a class="btn wa js-wa" href="#contato">Falar no WhatsApp</a>
         <a class="btn ghost" href="#conheca">Ver a cadeira</a>
       </div>
       <div class="fact">
-        <div><b>70 mm</b><span>de ajuste de altura no encosto</span></div>
+        <div><b><span data-count="70">70</span> mm</b><span>de ajuste de altura no encosto</span></div>
         <div><b>3 eixos</b><span>de ajuste em cada braço</span></div>
       </div>
     </div>
     <div class="stage"><img src="img/tres-quartos.webp" alt="Cadeira ergonômica Comfy ErgoMax preta com encosto de cabeça, vista em três quartos" width="1400" height="1400" fetchpriority="high"></div>
   </div>
 </section>
+
+<div class="strip" aria-hidden="true"><div class="track"><span>Tela mesh respirável</span><span>Estrutura em alumínio</span><span>Apoio lombar ajustável</span><span>Braços 3D</span><span>Encosto de cabeça</span><span>Rodízios suaves</span></div><div class="track"><span>Tela mesh respirável</span><span>Estrutura em alumínio</span><span>Apoio lombar ajustável</span><span>Braços 3D</span><span>Encosto de cabeça</span><span>Rodízios suaves</span></div></div>
 
 <section class="ergo dark screen" id="ergonomia" aria-labelledby="h-ergo">
   <div class="wrap">
@@ -331,6 +378,21 @@ footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   var nav=document.getElementById('nav');
   function navState(){nav.classList.toggle('solid',scrollY>40)}
   addEventListener('scroll',navState,{passive:true});navState();
+
+
+  /* revelação suave ao rolar + contador */
+  var reduceM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceM&&'IntersectionObserver' in window){
+    var sel='.ergo .wrap>*,.adj .head>*,.adj .big,.adj .card,.mat .wrap>*,.mat dl>div,.spec .wrap>*,.cta .wrap>*';
+    [].forEach.call(document.querySelectorAll(sel),function(e){
+      var sib=[].indexOf.call(e.parentNode.children,e);
+      e.style.setProperty('--d',(sib*0.12)+'s');e.classList.add('rv');
+    });
+    var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+    [].forEach.call(document.querySelectorAll('.rv'),function(e){io.observe(e)});
+    var c=document.querySelector('[data-count]');
+    if(c){var to=+c.dataset.count,t0=performance.now()+500;c.textContent=0;(function n(t){var k=Math.min(1,Math.max(0,(t-t0)/1500));c.textContent=Math.round(to*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(n)})(performance.now())}
+  }
 
   /* cena de rolagem: câmera percorre a foto da cadeira */
   var tour=document.getElementById('conheca'),img=document.getElementById('cam');
